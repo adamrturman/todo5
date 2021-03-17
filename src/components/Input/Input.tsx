@@ -1,7 +1,6 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import Button from '@material-ui/core/Button';
-import {TextField} from "@material-ui/core";
-
+import TextField from "@material-ui/core/TextField";
 
 interface InputProps {
     handleAdd: (taskToAdd: string) => void;
@@ -10,23 +9,25 @@ interface InputProps {
 export default function Input(props: InputProps) {
     const [task, setTask] = useState('');
 
-    const handleChange = (event: any) => {
+    const { handleAdd } = props;
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setTask(event.target.value);
-    }
+    };
 
     const addToList = () => {
         if (task.length > 0) {
-            props.handleAdd(task);
+            handleAdd(task);
             setTask('');
         } else {
-            alert('Blank ToDo\'s not allowed!')
+            alert(`Blank ToDo's not allowed!`);
         }
-    }
+    };
 
     return (
         <>
-            <TextField onChange={handleChange} id="standard-basic" label="ToDo" value={task} />
+            <TextField onChange={handleChange} label="ToDo" value={task} />
             <Button variant="contained" onClick={addToList}>Add</Button>
         </>
-    )
-};
+    );
+}

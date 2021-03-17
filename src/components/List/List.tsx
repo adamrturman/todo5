@@ -1,15 +1,7 @@
 import React from "react";
-import Item from "./Item";
+import ToDo from "../../interfaces/ToDo";
+import Item from "../Item/Item";
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
-
-interface ToDo {
-    text: string;
-    isCompleted: boolean;
-}
 
 interface ListProps {
     list: ToDo[];
@@ -19,11 +11,13 @@ interface ListProps {
 
 export default function ToDoList(props: ListProps) {
 
-    const displayedList = props.list.map((toDo: ToDo, index: number) => (
+    const { list, handleDelete, handleCompleted } = props;
+
+    const displayedList = list.map((toDo: ToDo, index: number) => (
         <Item
             key={index}
-            handleDelete={props.handleDelete}
-            handleCompleted={props.handleCompleted}
+            handleDelete={handleDelete}
+            handleCompleted={handleCompleted}
             index={index}
             toDo={toDo}
         />
@@ -34,6 +28,4 @@ export default function ToDoList(props: ListProps) {
             {displayedList}
         </List>
     );
-};
-
-
+}

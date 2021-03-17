@@ -1,17 +1,10 @@
 import React from "react";
-import styles from "../styles/Item.module.css";
+import styles from "./Item.module.css";
+import ToDo from "../../interfaces/ToDo";
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItem from '@material-ui/core/ListItem';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-
-
-
-interface ToDo {
-    text: string;
-    isCompleted: boolean;
-}
 
 interface ItemProps {
     handleDelete: (index: number) => void;
@@ -22,21 +15,20 @@ interface ItemProps {
 
 export default function Item(props: ItemProps) {
 
-    const deleteFromList = () => {
-        props.handleDelete(props.index);
-    }
+    const { handleDelete, handleCompleted, index, toDo } = props;
+    const { listElement, listItem } = styles;
 
-    const toggleComplete = () => {
-        props.handleCompleted(props.index);
-    }
+    const deleteFromList = () => handleDelete(index);
 
-    const itemClasses = props.toDo.isCompleted ? `${styles.completed}` : ``;
+    const toggleComplete = () => handleCompleted(index);
+
+    const itemClasses = toDo.isCompleted ? `completed` : ``;
 
     return (
-        <ListItem style={{"justifyContent" : "center"}}>
+        <ListItem className={`${listElement} ${listItem}`}>
             <Checkbox onChange={toggleComplete} />
-            <Typography className={itemClasses}>{props.toDo.text}</Typography>
+            <Typography className={itemClasses}>{toDo.text}</Typography>
             <DeleteForeverIcon onClick={deleteFromList} />
         </ListItem>
-    );
-};
+    )
+}
